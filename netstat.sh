@@ -1,10 +1,10 @@
 #!/bin/bash
 INTERVAL=30
-echo "TimeStamp,Proto,Recv-Q,Send-Q,Address,Port,State"
+echo "TimeStamp,Proto,Recv-Q,Send-Q,Local,Local-Port,Foreign,Foreign-Port,State"
 
 while true
 do
-	LIST=`netstat -nat | awk '{ print $1 "," $2 "," $3 "," $5 "," $6}' |  tr ':' ','`  
+	LIST=`netstat -nat | awk '{ print $1 "," $2 "," $3 "," $4 "," $5 "," $6 }' |  tr ':' ','`  
 	TIMESTAMP=`date +%s`
 	for ITEM in $LIST
 	do
@@ -16,7 +16,7 @@ do
 			OUTPUT=""
 			continue
 		fi
-		STATE=`echo $ITEM | cut -d "," -f6`
+		STATE=`echo $ITEM | cut -d "," -f8`
                 if [ "$STATE" = "LISTEN" ] ; then
                 	OUTPUT=""
                         continue
